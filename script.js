@@ -4,46 +4,37 @@ const upload = document.getElementById('upload');
 
 let userImg = new Image();
 let frameImg = new Image();
-frameImg.src = 'frame.png'; // Make sure this matches your file name exactly!
+frameImg.src = 'frame.png';
 
 let posX = 0, posY = 0, scale = 1;
 
-// 1. THIS FIXES THE BLANK LOOK: Draw the frame as soon as it loads
-frameImg.onload = () => {
-    draw(); 
-};
+frameImg.onload = () => draw();
 
 function draw() {
-    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    if (userImg.src && userImg.complete) {
-        // 2. THIS FIXES THE MISSING PHOTO: Draw user photo
-        // We use the scale and position variables
-        ctx.drawImage(userImg, posX, posY, canvas.width * scale, canvas.height * scale);
+    if (userImg.src) {
+        // Draw user image at the current coordinates
+        ctx.drawImage(userImg, posX, posY, userImg.width * scale, userImg.height * scale);
     }
-    
-    // Always draw the frame on top
     ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
 }
 
 upload.addEventListener('change', (e) => {
     const reader = new FileReader();
-    reader.onload = (f) => {
+    reader.onload = (event) => {
         userImg = new Image();
         userImg.onload = () => {
-            // Reset position and scale for the new photo
-            scale = 1;
+            // Initial centering: Start photo at (0,0) with scale to fit
+            scale = canvas.width / userImg.width;
             posX = 0;
             posY = 0;
             draw();
         };
-        userImg.src = f.target.result;
+        userImg.src = event.target.result;
     };
     reader.readAsDataURL(e.target.files[0]);
 });
 
-// Helper function for your buttons (Move/Zoom)
 function adjust(type) {
     if (type === 'plus') scale += 0.05;
     if (type === 'minus') scale -= 0.05;
@@ -53,3 +44,10 @@ function adjust(type) {
     if (type === 'right') posX += 20;
     draw();
 }
+
+document.getElementById('download').addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'SMCDC_Boishak_Profile.png';
+    link.href = canvas.toDataURL();
+    link.click();
+});
