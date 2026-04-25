@@ -1,41 +1,28 @@
-body {
-    background-color: #1a1a1a;
-    color: #f4f4f4;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    padding: 20px;
-}
-
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-canvas {
-    border: 3px solid #d4af37; /* Gold border like a movie frame */
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    max-width: 100%;
-    height: auto;
-    background: #000;
-}
-
-.controls {
-    margin-top: 20px;
+.controls-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+.action-bar {
+    margin-top: 20px;
 }
 
 button {
-    background: #e50914; /* Netflix Red */
+    background: #e50914;
     color: white;
     border: none;
     padding: 10px;
-    cursor: pointer;
     border-radius: 5px;
+    cursor: pointer;
     font-weight: bold;
 }
 
-button:hover {
-    background: #b20710;
+.download-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    margin-top: 10px;
 }
